@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1058135993361",
+    "project_id": "apotek-habibi",
+    "storage_bucket": "apotek-habibi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058135993361:android:85cbeeff46ee60d16255b0",
+        "android_client_info": {
+          "package_name": "com.apotekhabibi.apotek_habibi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058135993361-j3m0k7gmv3fkjbriqn78htvftcocrtdu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlOTlbjpBIjAg295DG929YLsB1nqJYr-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1058135993361-j3m0k7gmv3fkjbriqn78htvftcocrtdu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
