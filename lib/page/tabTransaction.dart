@@ -19,6 +19,8 @@ class TabTransaction extends StatefulWidget {
 
 
 class _TabTransactionState extends State<TabTransaction> {
+  String selectedDuration = '1 Hari';
+  List<String> durationOptions = ['1 Hari', '7 Hari', '30 Hari'];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -89,45 +91,72 @@ class _TabTransactionState extends State<TabTransaction> {
                 },
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(
-                    0, 5, 10, 5),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 10, 5),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment:
-                  MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional
-                          .fromSTEB(0, 0, 5, 0),
-                      child: Text(
-                        'Filter',
-                        style:
-                        TextStyle(
-                          fontFamily:
-                          'Readex Pro',
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    Icon(
-                      Icons.filter_list,
-                      color: Colors.black,
-                      size: 24,
+                    DropdownButton<String>(
+                      value: selectedDuration,
+                      items: durationOptions.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) { // Change the argument type to String?
+                        if (newValue != null) {
+                          setState(() {
+                            selectedDuration = newValue;
+                          });
+                          // Perform filtering here based on the selectedDuration
+                          // Call a function that filters your transaction list
+                          // and updates the UI accordingly.
+                        }
+                      },
                     ),
                   ],
                 ),
               ),
+
               Expanded(
                 child: Container(
                   height: size.height,
                   child: StreamBuilder<List<TotalTransaksi>>(
                       stream: readTotalTransaksi(),
                       builder: (context, snapshot) {
-                        print('Snapshot data: ${snapshot.data}');
                         if (snapshot.hasData) {
                           final transaksi = snapshot.data!;
-                          final List<Widget> widgetList = [];
+
+                          // Calculate start dates for different durations
+                          DateTime currentDate = DateTime.now();
+                          DateTime startDate1Day = currentDate.subtract(Duration(days: 1));
+                          DateTime startDate7Days = currentDate.subtract(Duration(days: 7));
+                          DateTime startDate30Days = currentDate.subtract(Duration(days: 30));
+
+                          // Create a list to store transactions that match the selected duration
+                          final List<TotalTransaksi> filteredTransactions = [];
+
                           transaksi.forEach((totaltransaksi) {
+                            DateTime transactionDate = totaltransaksi.waktupenjualan;
+
+                            // Check if the transaction date is within the selected duration
+                            if (selectedDuration == '1 Hari' && transactionDate.isAfter(startDate1Day)) {
+                              filteredTransactions.add(totaltransaksi);
+                            } else if (selectedDuration == '7 Hari' && transactionDate.isAfter(startDate7Days)) {
+                              filteredTransactions.add(totaltransaksi);
+                            } else if (selectedDuration == '30 Hari' && transactionDate.isAfter(startDate30Days)) {
+                              filteredTransactions.add(totaltransaksi);
+                            }
+                          });
+
+                          // Sort transactions in descending order (newest first)
+                          filteredTransactions.sort((a, b) => b.waktupenjualan.compareTo(a.waktupenjualan));
+
+                          final List<Widget> widgetList = [];
+
+                          // Build widgets for each sorted transaction
+                          filteredTransactions.forEach((totaltransaksi) {
                             widgetList.add(buildpenjualan(context, totaltransaksi));
                           });
                           return ListView(

@@ -17,6 +17,7 @@ class TotalTransaksi {
     'transaksiID' : id,
     'total_penjualan': totalpenjualan,
     'waktu_penjualan': waktupenjualan,
+    'items' : listitems,
   };
 
   static TotalTransaksi fromJson(Map<String, dynamic> json) {

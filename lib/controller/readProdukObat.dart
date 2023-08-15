@@ -8,3 +8,4 @@ Stream<List<Produkobat>> readProdukobat() => FirebaseFirestore.instance
     .snapshots()
     .map((snapshots) =>
     snapshots.docs.map((doc) => Produkobat.fromJson(doc.data())).toList());
+
