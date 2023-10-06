@@ -42,11 +42,18 @@ dependencies:
   quickalert: ^1.0.1
   curved_navigation_bar: ^1.0.3
   firestore_search: ^0.2.0
-  fl_chart: ^0.63.0
+  d_chart: ^2.3.0
+  pdfx: ^2.4.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  image_path: "assets/iconlauncher.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

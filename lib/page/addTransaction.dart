@@ -3,10 +3,16 @@ import 'package:apotek_habibi/model/produkObat.dart';
 import 'package:apotek_habibi/style/buttonwidget.dart';
 import 'package:apotek_habibi/style/color.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../Widget/searchWidget.dart';
 import '../controller/readProdukObat.dart';
+
+List<KeranjangProduk> addedProdukKeranjang = [];
 
 class AddTransaction extends StatefulWidget {
   const AddTransaction({Key? key}) : super(key: key);
@@ -18,16 +24,109 @@ class AddTransaction extends StatefulWidget {
 class _AddTransactionState extends State<AddTransaction> {
   TextEditingController _SearchControllerTransaksi = TextEditingController();
   List<Produkobat> filteredProdukObatTransaksi = [];
-  List<Produkobat> keranajangTambahTransaksi = [];
+  final currencyFormatter = NumberFormat('#,##0', 'ID');
 
   bool iniKosong = true;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  void updateUI(){
+    setState(() {
+
+    });
+  }
+
+  void uploadTransaction(List<KeranjangProduk> addedProdukKeranjang) async {
+    CollectionReference transaksiCollection =
+    FirebaseFirestore.instance.collection('transaksi');
+    CollectionReference produkCollection =
+    FirebaseFirestore.instance.collection('produk');
+
+    final totalHarga = calculateTotalHarga();
+    final totalModal = calculateTotalModal();
+    List<Map<String, dynamic>> items = addedProdukKeranjang.map((produk) {
+      return {
+        'nama_item': produk.nama,
+        'satuan_item': produk.satuan,
+        'total_item': produk.jumlahproduksementara,
+      };
+    }).toList();
+
+    bool allProductsAvailable = true;
+
+    for (KeranjangProduk produk in addedProdukKeranjang) {
+      final snapshot = await produkCollection
+          .where('nama_produk', isEqualTo: produk.nama)
+          .where('satuan_produk', isEqualTo: produk.satuan)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final availableStock = snapshot.docs[0]['jumlah_produk'];
+        if (availableStock < produk.jumlahproduksementara) {
+          allProductsAvailable = false;
+          break;
+        }
+      }
+    }
+
+    if (!allProductsAvailable) {
+      addedProdukKeranjang.clear();
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.error,
+        title: 'Gagal',
+        text: 'Salah Satu Barang Habis',
+        confirmBtnColor: Warna.unguhabibi,
+      );
+      return;
+    }
+
+    for (KeranjangProduk produk in addedProdukKeranjang) {
+      final snapshot = await produkCollection
+          .where('nama_produk', isEqualTo: produk.nama)
+          .where('satuan_produk', isEqualTo: produk.satuan)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final docId = snapshot.docs[0].id;
+        final remainingStock =
+            snapshot.docs[0]['jumlah_produk'] - produk.jumlahproduksementara;
+        await produkCollection.doc(docId).update({
+          'jumlah_produk': remainingStock,
+        });
+      }
+    }
+
+    DocumentReference transactionDoc = await transaksiCollection.add({
+      'total_penjualan': totalHarga.toInt(),
+      'total_modal' : totalModal.toInt(),
+      'waktu_penjualan': Timestamp.now(),
+      'items': items,
+    });
+
+    transactionDoc.set({
+      'total_penjualan': totalHarga.toInt(),
+      'total_modal' : totalModal.toInt(),
+      'waktu_penjualan': Timestamp.now(),
+      'items': items,
+      'transaksiID': transactionDoc.id,
+    });
+    addedProdukKeranjang.clear();
+    Navigator.pop(context);
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.success,
+      title: 'Sukses',
+      text: 'Transaksi Berhasil',
+      confirmBtnColor: Warna.unguhabibi,
+    );
+  }
+
+
+
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -35,6 +134,41 @@ class _AddTransactionState extends State<AddTransaction> {
 
     super.dispose();
   }
+  Widget buildKeranjang(KeranjangProduk produk) {
+    return CardKeranjangTransaksi(
+      keranjangproduk: produk,
+      onDelete: () {
+        setState(() {
+          addedProdukKeranjang.remove(produk);
+        });
+      },
+    );
+  }
+
+  double calculateTotalHarga() {
+    double totalHarga = 0;
+
+    addedProdukKeranjang.forEach((element) {
+      int quantity = element.jumlahproduksementara ?? 0;
+      double hargaPerItem = element.hargajual ?? 0.0;
+      totalHarga += quantity * hargaPerItem;
+    });
+
+    return totalHarga;
+  }
+
+  double calculateTotalModal() {
+    double totalModal = 0;
+
+    addedProdukKeranjang.forEach((element) {
+      int quantity = element.jumlahproduksementara ?? 0;
+      double modalPerItem = element.hargabeli ?? 0.0;
+      totalModal += quantity * modalPerItem;
+    });
+
+    return totalModal;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,25 +207,16 @@ class _AddTransactionState extends State<AddTransaction> {
                           padding:
                           EdgeInsetsDirectional.fromSTEB(0, 0, 2, 0),
                           child: AutoSizeText(
-                            'Rp,',
+                            'Rp ${currencyFormatter.format(calculateTotalHarga())}',
                             maxLines: 1,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'Readex Pro',
-                              fontSize: 25,
+                              fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ),
-                        AutoSizeText(
-                          '50000',
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Readex Pro',
-                            fontSize: 25,
-                            fontWeight: FontWeight.w600,
-                          ),
+
                         ),
                       ],
                     ),
@@ -101,15 +226,17 @@ class _AddTransactionState extends State<AddTransaction> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                 child: ButtonIcon(
-                    iconbutton: Icons.chevron_right_rounded,
-                    colorbutton: Warna.unguhabibi,
-                    sizebutton: 50,
-                    ontap: () {
+                  iconbutton: Icons.chevron_right_rounded,
+                  colorbutton: Warna.unguhabibi,
+                  sizebutton: 50,
+                  ontap: () async {
+                    uploadTransaction(addedProdukKeranjang);
+                  },
 
-                    },
-                    coloricon: Colors.white,
-                    sizeicon: 40,
-                    radiusbutton: 20),
+                  coloricon: Colors.white,
+                  sizeicon: 40,
+                  radiusbutton: 20,
+                ),
               ),
             ],
           ),
@@ -119,7 +246,16 @@ class _AddTransactionState extends State<AddTransaction> {
         appBar: AppBar(
           backgroundColor: Warna.primarybackground,
           iconTheme: IconThemeData(color: Colors.black),
-          automaticallyImplyLeading: true,
+          leading: GestureDetector(
+            child: Icon(Icons.arrow_back),
+            onTap: (){
+              setState(() {
+                addedProdukKeranjang.clear();
+              });
+              Navigator.of(context).pop();
+            },
+          ),
+          automaticallyImplyLeading: false,
           title: Text(
             'Tambah Transaksi',
             textAlign: TextAlign.start,
@@ -176,7 +312,7 @@ class _AddTransactionState extends State<AddTransaction> {
                             ),
                           );
                         } else {
-                          return Center(child: Text('Cari item diatas'));
+                          return Center(child: Text('Cari Produk diatas'));
                         }
                       }
                   ),
@@ -206,17 +342,16 @@ class _AddTransactionState extends State<AddTransaction> {
                                 endIndent: 120,
                               ),
                             ),
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: 5,
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (BuildContext context, int index) {
-                                return CardKeranjangTransaksi();
-                              },
-
-                            ),
+                      Container(
+                        child: SingleChildScrollView(
+                          child: ListView(physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          children: addedProdukKeranjang.map(buildKeranjang).toList(),
+                          ),
+                        ),
+                      )
                           ],
                         ),
                       ),
@@ -231,3 +366,35 @@ class _AddTransactionState extends State<AddTransaction> {
     );
   }
 }
+void addCart(Produkobat inidata) {
+  bool productExists = false;
+
+  for (KeranjangProduk keranjangProduk in addedProdukKeranjang) {
+    if (keranjangProduk.nama == inidata.nama) {
+      productExists = true;
+      break;
+    }
+  }
+
+  if (!productExists) {
+    addedProdukKeranjang.add(KeranjangProduk(
+      nama: inidata.nama,
+      stok: inidata.stok,
+      hargajual: inidata.hargajual,
+      hargabeli: inidata.hargabeli,
+      satuan: inidata.satuan,
+      jumlahproduksementara: 1,
+    ));
+  }
+
+  addedProdukKeranjang.forEach((element) {
+    print(element.toJson());
+    print(element.jumlahproduksementara);
+  });
+}
+
+
+
+
+
+

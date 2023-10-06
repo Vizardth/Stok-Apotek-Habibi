@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../model/produkObat.dart';
 
+List<Produkobat> listData = [];
+
 Widget buildProduk(Produkobat produkobat) =>
     CardWidgetProdukObat(produkobat: produkobat);
 
@@ -21,7 +23,10 @@ List<Produkobat> filterProdukList(List<Produkobat> data, String query) {
 }
 
 Widget buildProdukTransaksi(Produkobat produkobat) =>
-    CardWidgetProdukObatTransaksi(produkobat: produkobat);
+    SearchProdukTransaksi(produkobat: produkobat);
+
+Widget buildKeranjang(KeranjangProduk keranjangProduk) =>
+    CardKeranjangTransaksi(keranjangproduk: keranjangProduk, onDelete: () {  },);
 
 List<Produkobat> filterProdukListTransaksi(List<Produkobat> data, String query) {
   if(query.isEmpty){
@@ -36,3 +41,5 @@ List<Produkobat> filterProdukListTransaksi(List<Produkobat> data, String query) 
     return namaproduk.contains(lowercasequery) || satuanproduk.contains(lowercasequery);
   }).toList();
 }
+
+

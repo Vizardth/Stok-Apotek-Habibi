@@ -1,5 +1,6 @@
 import 'package:apotek_habibi/controller/readTotalTransaksi.dart';
 import 'package:apotek_habibi/model/totalTransaksi.dart';
+import 'package:apotek_habibi/page/addTransaction.dart';
 import 'package:apotek_habibi/page/editMedication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,8 @@ class _CardWidgetProdukObatState extends State<CardWidgetProdukObat> {
   final currencyFormatter = NumberFormat('#,##0', 'ID');
   @override
   Widget build(BuildContext context) {
-    double harga = widget.produkobat.harga;
+    double hargabeli = widget.produkobat.hargabeli;
+    double hargajual = widget.produkobat.hargajual;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -113,18 +115,18 @@ class _CardWidgetProdukObatState extends State<CardWidgetProdukObat> {
                           style: TextStyle(
                             fontFamily:
                             'Readex Pro',
-                            color: Warna.tertiary,
+                            color: Warna.error,
                             fontWeight:
                             FontWeight
                                 .w600,
                           ),
                         ),
                         Text(
-                          '${currencyFormatter.format(harga)}',
+                          '${currencyFormatter.format(hargabeli)}',
                           style: const TextStyle(
                             fontFamily:
                             'Readex Pro',
-                            color: Warna.tertiary,
+                            color: Warna.error,
                             fontWeight:
                             FontWeight
                                 .w600,
@@ -136,8 +138,8 @@ class _CardWidgetProdukObatState extends State<CardWidgetProdukObat> {
                 ),
               ),
               Row(
-                mainAxisSize:
-                MainAxisSize.max,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     mainAxisSize:
@@ -165,6 +167,231 @@ class _CardWidgetProdukObatState extends State<CardWidgetProdukObat> {
                           fontWeight:
                           FontWeight
                               .w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize:
+                    MainAxisSize.max,
+                    children: [
+                      const Text(
+                        'Rp,',
+                        style: TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                      ),
+                      Text(
+                        '${currencyFormatter.format(hargajual)}',
+                        style: const TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SearchProdukTransaksi extends StatefulWidget {
+  final Produkobat produkobat;
+  SearchProdukTransaksi({super.key, required this.produkobat});
+
+  @override
+  State<SearchProdukTransaksi> createState() => _SearchProdukTransaksiState();
+}
+class _SearchProdukTransaksiState extends State<SearchProdukTransaksi> {
+  final currencyFormatter = NumberFormat('#,##0', 'ID');
+
+
+  @override
+  Widget build(BuildContext context) {
+    double hargabeli = widget.produkobat.hargabeli;
+    double hargajual = widget.produkobat.hargajual;
+    return GestureDetector(
+      onTap: () {
+        var data = widget.produkobat;
+        setState(() {
+          addCart(data);
+        });
+      },
+      child: Card(
+        clipBehavior:
+        Clip.antiAliasWithSaveLayer,
+        color: Warna.secondarybackground,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius:
+          BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: const EdgeInsetsDirectional
+              .fromSTEB(10, 10, 10, 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Row(
+                mainAxisSize:
+                MainAxisSize.max,
+                mainAxisAlignment:
+                MainAxisAlignment
+                    .spaceBetween,
+                children: [
+                  Row(
+                    mainAxisSize:
+                    MainAxisSize.max,
+                    mainAxisAlignment:
+                    MainAxisAlignment
+                        .start,
+                    children: [
+                      Text(
+                        widget.produkobat.satuan,
+                        style: const TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.primarytext,
+                          fontSize: 16,
+                          fontWeight:
+                          FontWeight
+                              .normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: Row(
+                  mainAxisSize:
+                  MainAxisSize.max,
+                  mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisSize:
+                      MainAxisSize.max,
+                      children: [
+                        Text(
+                          widget.produkobat.nama,
+                          style: const TextStyle(
+                            fontFamily:
+                            'Readex Pro',
+                            color: Warna.primarytext,
+                            fontSize: 18,
+                            fontWeight:
+                            FontWeight
+                                .bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisSize:
+                      MainAxisSize.max,
+                      children: [
+                        const Text(
+                          'Rp,',
+                          style: TextStyle(
+                            fontFamily:
+                            'Readex Pro',
+                            color: Warna.error,
+                            fontWeight:
+                            FontWeight
+                                .w600,
+                          ),
+                        ),
+                        Text(
+                          '${currencyFormatter.format(hargabeli)}',
+                          style: const TextStyle(
+                            fontFamily:
+                            'Readex Pro',
+                            color: Warna.error,
+                            fontWeight:
+                            FontWeight
+                                .w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisSize:
+                    MainAxisSize.max,
+                    children: [
+                      const Text(
+                        'Stok - ',
+                        style: TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.secondarytext,
+                          fontSize: 14,
+                          fontWeight:
+                          FontWeight
+                              .w400,
+                        ),
+                      ),
+                      Text(
+                        widget.produkobat.stok.toString(),
+                        style: const TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.secondarytext,
+                          fontSize: 14,
+                          fontWeight:
+                          FontWeight
+                              .w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize:
+                    MainAxisSize.max,
+                    children: [
+                      const Text(
+                        'Rp,',
+                        style: TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                      ),
+                      Text(
+                        '${currencyFormatter.format(hargajual)}',
+                        style: const TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
                         ),
                       ),
                     ],
@@ -223,11 +450,12 @@ class CardWidgetOmset extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      'Omset',
+                      'Profit',
                       style: TextStyle(
                         fontFamily: 'Readex Pro',
                         color: Colors.white,
                         fontWeight: FontWeight.w300,
+                        fontSize: 18,
                       ),
                     ),
                   ],
@@ -244,17 +472,8 @@ class CardWidgetOmset extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const Text(
-                      'Rp,',
-                      style: TextStyle(
-                        fontFamily: 'Readex Pro',
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     Text(
-                      '$totalPenjualanSumFormat',
+                      'Rp, $totalPenjualanSumFormat',
                       style: const TextStyle(
                         fontFamily: 'Readex Pro',
                         color: Colors.white,
@@ -422,6 +641,88 @@ class CardWidgetOmset extends StatelessWidget {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 5),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Text(
+                      'Total Modal Bulan ',
+                      style: TextStyle(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      currentMonthYear,
+                      style: const TextStyle(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Text(
+                      'Rp,',
+                      style: TextStyle(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                      ),
+                    ),
+                    StreamBuilder<int>(
+                      stream: readTotalModalBulan(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Text(
+                            'Loading...',
+                            style: TextStyle(
+                              fontFamily: 'Readex Pro',
+                              color: Colors.white,
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return const Text(
+                            'Error fetching data',
+                            style: TextStyle(
+                              fontFamily: 'Readex Pro',
+                              color: Colors.white,
+                            ),
+                          );
+                        } else {
+                          if (snapshot.data == null) {
+                            return const Text(
+                              'No data available',
+                              style: TextStyle(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                              ),
+                            );
+                          } else {
+                            final omsetBulan = snapshot.data!;
+                            final omsetBulanFormat = NumberFormat('#,##0', 'ID').format(omsetBulan);
+                            return Text(
+                              '$omsetBulanFormat',
+                              style: const TextStyle(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -476,20 +777,46 @@ Widget buildpenjualan(BuildContext context, TotalTransaksi transaksi) {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
-                                mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  const Text(
-                                    'Rp,',
-                                    style: TextStyle(
-                                      fontFamily: 'Readex Pro',
-                                      color: Warna.tertiary,
-                                    ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      const Text(
+                                        'Rp,',
+                                        style: TextStyle(
+                                          fontFamily: 'Readex Pro',
+                                          color: Warna.hijaujual,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${currencyFormatter.format(totalpenjualan)}',
+                                        style: const TextStyle(
+                                          fontFamily: 'Readex Pro',
+                                          color: Warna.hijaujual,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    '${currencyFormatter.format(totalpenjualan)}',
-                                    style: const TextStyle(
-                                      fontFamily: 'Readex Pro',
-                                      color: Warna.tertiary,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        const Text(
+                                          'Rp,',
+                                          style: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Warna.error,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${currencyFormatter.format(transaksi.totalmodal)}',
+                                          style: const TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Warna.error,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -551,7 +878,7 @@ Widget buildpenjualan(BuildContext context, TotalTransaksi transaksi) {
                                       'x',
                                       style: TextStyle(
                                         fontFamily: 'Readex Pro',
-                                        color: Warna.secondarytext,
+                                        color: Warna.primarytext,
                                       ),
                                     ),
                                   ),
@@ -562,7 +889,7 @@ Widget buildpenjualan(BuildContext context, TotalTransaksi transaksi) {
                                       item['total_item'].toString(),
                                       style: const TextStyle(
                                         fontFamily: 'Readex Pro',
-                                        color: Warna.secondarytext,
+                                        color: Warna.primarytext,
                                       ),
                                     ),
                                   ),
@@ -575,7 +902,7 @@ Widget buildpenjualan(BuildContext context, TotalTransaksi transaksi) {
                                     item['satuan_item'],
                                     style: TextStyle(
                                       fontFamily: 'Readex Pro',
-                                      color: Warna.secondarytext,
+                                      color: Warna.primarytext,
                                     ),
                                   ),
                                 ],
@@ -609,7 +936,8 @@ class _CardWidgetProdukObatTransaksiState extends State<CardWidgetProdukObatTran
   final currencyFormatter = NumberFormat('#,##0', 'ID');
   @override
   Widget build(BuildContext context) {
-    double harga = widget.produkobat.harga;
+    double hargabeli = widget.produkobat.hargabeli;
+    double hargajual = widget.produkobat.hargajual;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -699,18 +1027,18 @@ class _CardWidgetProdukObatTransaksiState extends State<CardWidgetProdukObatTran
                           style: TextStyle(
                             fontFamily:
                             'Readex Pro',
-                            color: Warna.tertiary,
+                            color: Warna.error,
                             fontWeight:
                             FontWeight
                                 .w600,
                           ),
                         ),
                         Text(
-                          '${currencyFormatter.format(harga)}',
+                          '${currencyFormatter.format(hargabeli)}',
                           style: const TextStyle(
                             fontFamily:
                             'Readex Pro',
-                            color: Warna.tertiary,
+                            color: Warna.error,
                             fontWeight:
                             FontWeight
                                 .w600,
@@ -722,8 +1050,8 @@ class _CardWidgetProdukObatTransaksiState extends State<CardWidgetProdukObatTran
                 ),
               ),
               Row(
-                mainAxisSize:
-                MainAxisSize.max,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     mainAxisSize:
@@ -755,6 +1083,34 @@ class _CardWidgetProdukObatTransaksiState extends State<CardWidgetProdukObatTran
                       ),
                     ],
                   ),
+                  Row(
+                    mainAxisSize:
+                    MainAxisSize.max,
+                    children: [
+                      const Text(
+                        'Rp,',
+                        style: TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                      ),
+                      Text(
+                        '${currencyFormatter.format(hargajual)}',
+                        style: const TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ],
@@ -767,167 +1123,180 @@ class _CardWidgetProdukObatTransaksiState extends State<CardWidgetProdukObatTran
 
 
 class CardKeranjangTransaksi extends StatefulWidget {
-  const CardKeranjangTransaksi({super.key});
+  final KeranjangProduk keranjangproduk;
+  final VoidCallback onDelete; // Callback function
+  const CardKeranjangTransaksi({Key? key, required this.keranjangproduk, required this.onDelete});
 
   @override
   State<CardKeranjangTransaksi> createState() => _CardKeranjangTransaksiState();
 }
 class _CardKeranjangTransaksiState extends State<CardKeranjangTransaksi> {
+  final currencyFormatter = NumberFormat('#,##0', 'ID');
+  final jumlahController = TextEditingController();
+
+  @override
+  void initState(){
+    super.initState();
+    jumlahController.text = widget.keranjangproduk.jumlahproduksementara.toString();
+  }
   @override
   Widget build(BuildContext context) {
+    final indexList = addedProdukKeranjang.indexWhere((element) => element.nama == widget.keranjangproduk.nama);
+    int currentValue = int.parse(jumlahController.text);
+    double? jumlahHarga = widget.keranjangproduk.hargajual! * currentValue;
     return Container(
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10, 8, 0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(10, 8, 0, 0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Nama Produk',
+                      widget.keranjangproduk.nama,
                       style: TextStyle(
                         fontFamily: 'Readex Pro',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 2, 0, 8),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 1, 0),
-                      child: Text(
-                        'Rp,',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
                     Text(
-                      'Harga',
+                      'Rp, ${currencyFormatter.format(jumlahHarga)}  ',
                       style: TextStyle(color: Colors.black),
                     ),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Column(
+          Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional
-                        .fromSTEB(0, 0, 5, 0),
-                    child: ButtonIcon(
-                      iconbutton: Icons.delete,
-                      colorbutton: Colors.transparent,
-                      sizebutton: 40,
-                      ontap: () {},
-                      coloricon: Warna.error,
-                      sizeicon: 24,
-                      radiusbutton: 20,
-                    ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                child: ButtonIcon(
+                  iconbutton: Icons.delete,
+                  colorbutton: Colors.transparent,
+                  sizebutton: 40,
+                  ontap: widget.onDelete, // Call onDelete callback
+                  coloricon: Warna.error,
+                  sizeicon: 24,
+                  radiusbutton: 20,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  if (currentValue > 1) {
+                    setState(() {
+                      jumlahController.text = (currentValue - 1).toString();
+                      addedProdukKeranjang[indexList].jumlahproduksementara = int.parse(jumlahController.text);
+                    });
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: currentValue > 1 ? Color(0xFF2E92F1) : Colors.grey, // Adjust disabled color
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  ButtonIcon(
-                      iconbutton: Icons.remove_rounded,
-                      colorbutton: Color(0xFF2E92F1),
-                      sizebutton: 40,
-                      ontap: () {},
-                      coloricon: Colors.white,
-                      sizeicon: 24,
-                      radiusbutton: 20
+                  padding: EdgeInsets.all(10),
+                  child: Icon(
+                    Icons.remove_rounded,
+                    color: currentValue > 1 ? Colors.white : Colors.white, // Adjust icon color
+                    size: 24,
                   ),
-                  Container(
-                    width: 50,
-                    decoration: BoxDecoration(),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional
-                          .fromSTEB(5, 0, 5, 0),
-                      child: TextFormField(
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintText: '0',
-                          hintStyle: TextStyle(color: Colors.grey),
-                          enabledBorder:
-                          UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color:
-                              Warna.alternate,
-                              width: 2,
-                            ),
-                            borderRadius:
-                            BorderRadius.circular(
-                                8),
-                          ),
-                          focusedBorder:
-                          UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color:
-                              Warna.primary,
-                              width: 2,
-                            ),
-                            borderRadius:
-                            BorderRadius.circular(
-                                8),
-                          ),
-                          errorBorder:
-                          UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color:
-                              Warna.error,
-                              width: 2,
-                            ),
-                            borderRadius:
-                            BorderRadius.circular(
-                                8),
-                          ),
-                          focusedErrorBorder:
-                          UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color:
-                              Warna.error,
-                              width: 2,
-                            ),
-                            borderRadius:
-                            BorderRadius.circular(
-                                8),
-                          ),
+                ),
+              ),
+              Container(
+                width: 50,
+                decoration: BoxDecoration(),
+                child: Padding(
+                  padding: EdgeInsetsDirectional
+                      .fromSTEB(5, 0, 5, 0),
+                  child: TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        addedProdukKeranjang[indexList].jumlahproduksementara = int.parse(value);
+                      });
+                    },
+                    controller: jumlahController,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      enabledBorder:
+                      UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                          Warna.alternate,
+                          width: 2,
                         ),
-                        style: TextStyle(
-                          fontFamily:
-                          'Readex Pro',
-                          fontSize: 16,
-                          fontWeight:
-                          FontWeight.normal,
+                        borderRadius:
+                        BorderRadius.circular(
+                            8),
+                      ),
+                      focusedBorder:
+                      UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                          Warna.primary,
+                          width: 2,
                         ),
-                        textAlign: TextAlign.center,
+                        borderRadius:
+                        BorderRadius.circular(
+                            8),
+                      ),
+                      errorBorder:
+                      UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                          Warna.error,
+                          width: 2,
+                        ),
+                        borderRadius:
+                        BorderRadius.circular(
+                            8),
+                      ),
+                      focusedErrorBorder:
+                      UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color:
+                          Warna.error,
+                          width: 2,
+                        ),
+                        borderRadius:
+                        BorderRadius.circular(
+                            8),
                       ),
                     ),
+                    style: TextStyle(
+                      fontFamily:
+                      'Readex Pro',
+                      fontSize: 16,
+                      fontWeight:
+                      FontWeight.normal,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  ButtonIcon(
-                      iconbutton: Icons.add_rounded,
-                      colorbutton: Color(0xFF2E92F1),
-                      sizebutton: 40,
-                      ontap: () {},
-                      coloricon: Colors.white,
-                      sizeicon: 24,
-                      radiusbutton: 20
-                  ),
-                ],
+                ),
               ),
-
+              ButtonIcon(
+                  iconbutton: Icons.add_rounded,
+                  colorbutton: Color(0xFF2E92F1),
+                  sizebutton: 40,
+                  ontap: () {
+                    setState(() {
+                      jumlahController.text = (int.parse(jumlahController.text)+1).toString();
+                      addedProdukKeranjang[indexList].jumlahproduksementara = int.parse(jumlahController.text);
+                    });
+                  },
+                  coloricon: Colors.white,
+                  sizeicon: 24,
+                  radiusbutton: 20
+              ),
             ],
           ),
         ],
