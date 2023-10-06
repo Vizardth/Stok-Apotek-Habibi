@@ -24,7 +24,8 @@ class _CardWidgetProdukObatState extends State<CardWidgetProdukObat> {
   final currencyFormatter = NumberFormat('#,##0', 'ID');
   @override
   Widget build(BuildContext context) {
-    double harga = widget.produkobat.harga;
+    double hargabeli = widget.produkobat.hargabeli;
+    double hargajual = widget.produkobat.hargajual;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -114,18 +115,18 @@ class _CardWidgetProdukObatState extends State<CardWidgetProdukObat> {
                           style: TextStyle(
                             fontFamily:
                             'Readex Pro',
-                            color: Warna.tertiary,
+                            color: Warna.error,
                             fontWeight:
                             FontWeight
                                 .w600,
                           ),
                         ),
                         Text(
-                          '${currencyFormatter.format(harga)}',
+                          '${currencyFormatter.format(hargabeli)}',
                           style: const TextStyle(
                             fontFamily:
                             'Readex Pro',
-                            color: Warna.tertiary,
+                            color: Warna.error,
                             fontWeight:
                             FontWeight
                                 .w600,
@@ -137,8 +138,8 @@ class _CardWidgetProdukObatState extends State<CardWidgetProdukObat> {
                 ),
               ),
               Row(
-                mainAxisSize:
-                MainAxisSize.max,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     mainAxisSize:
@@ -170,6 +171,34 @@ class _CardWidgetProdukObatState extends State<CardWidgetProdukObat> {
                       ),
                     ],
                   ),
+                  Row(
+                    mainAxisSize:
+                    MainAxisSize.max,
+                    children: [
+                      const Text(
+                        'Rp,',
+                        style: TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                      ),
+                      Text(
+                        '${currencyFormatter.format(hargajual)}',
+                        style: const TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ],
@@ -193,7 +222,8 @@ class _SearchProdukTransaksiState extends State<SearchProdukTransaksi> {
 
   @override
   Widget build(BuildContext context) {
-    double harga = widget.produkobat.harga;
+    double hargabeli = widget.produkobat.hargabeli;
+    double hargajual = widget.produkobat.hargajual;
     return GestureDetector(
       onTap: () {
         var data = widget.produkobat;
@@ -282,18 +312,18 @@ class _SearchProdukTransaksiState extends State<SearchProdukTransaksi> {
                           style: TextStyle(
                             fontFamily:
                             'Readex Pro',
-                            color: Warna.tertiary,
+                            color: Warna.error,
                             fontWeight:
                             FontWeight
                                 .w600,
                           ),
                         ),
                         Text(
-                          '${currencyFormatter.format(harga)}',
+                          '${currencyFormatter.format(hargabeli)}',
                           style: const TextStyle(
                             fontFamily:
                             'Readex Pro',
-                            color: Warna.tertiary,
+                            color: Warna.error,
                             fontWeight:
                             FontWeight
                                 .w600,
@@ -305,8 +335,8 @@ class _SearchProdukTransaksiState extends State<SearchProdukTransaksi> {
                 ),
               ),
               Row(
-                mainAxisSize:
-                MainAxisSize.max,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     mainAxisSize:
@@ -334,6 +364,34 @@ class _SearchProdukTransaksiState extends State<SearchProdukTransaksi> {
                           fontWeight:
                           FontWeight
                               .w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize:
+                    MainAxisSize.max,
+                    children: [
+                      const Text(
+                        'Rp,',
+                        style: TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                      ),
+                      Text(
+                        '${currencyFormatter.format(hargajual)}',
+                        style: const TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
                         ),
                       ),
                     ],
@@ -392,11 +450,12 @@ class CardWidgetOmset extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      'Omset',
+                      'Profit',
                       style: TextStyle(
                         fontFamily: 'Readex Pro',
                         color: Colors.white,
                         fontWeight: FontWeight.w300,
+                        fontSize: 18,
                       ),
                     ),
                   ],
@@ -413,17 +472,8 @@ class CardWidgetOmset extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const Text(
-                      'Rp,',
-                      style: TextStyle(
-                        fontFamily: 'Readex Pro',
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     Text(
-                      '$totalPenjualanSumFormat',
+                      'Rp, $totalPenjualanSumFormat',
                       style: const TextStyle(
                         fontFamily: 'Readex Pro',
                         color: Colors.white,
@@ -591,6 +641,88 @@ class CardWidgetOmset extends StatelessWidget {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 5),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Text(
+                      'Total Modal Bulan ',
+                      style: TextStyle(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      currentMonthYear,
+                      style: const TextStyle(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Text(
+                      'Rp,',
+                      style: TextStyle(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                      ),
+                    ),
+                    StreamBuilder<int>(
+                      stream: readTotalModalBulan(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Text(
+                            'Loading...',
+                            style: TextStyle(
+                              fontFamily: 'Readex Pro',
+                              color: Colors.white,
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return const Text(
+                            'Error fetching data',
+                            style: TextStyle(
+                              fontFamily: 'Readex Pro',
+                              color: Colors.white,
+                            ),
+                          );
+                        } else {
+                          if (snapshot.data == null) {
+                            return const Text(
+                              'No data available',
+                              style: TextStyle(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                              ),
+                            );
+                          } else {
+                            final omsetBulan = snapshot.data!;
+                            final omsetBulanFormat = NumberFormat('#,##0', 'ID').format(omsetBulan);
+                            return Text(
+                              '$omsetBulanFormat',
+                              style: const TextStyle(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -645,20 +777,46 @@ Widget buildpenjualan(BuildContext context, TotalTransaksi transaksi) {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
-                                mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  const Text(
-                                    'Rp,',
-                                    style: TextStyle(
-                                      fontFamily: 'Readex Pro',
-                                      color: Warna.tertiary,
-                                    ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      const Text(
+                                        'Rp,',
+                                        style: TextStyle(
+                                          fontFamily: 'Readex Pro',
+                                          color: Warna.hijaujual,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${currencyFormatter.format(totalpenjualan)}',
+                                        style: const TextStyle(
+                                          fontFamily: 'Readex Pro',
+                                          color: Warna.hijaujual,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    '${currencyFormatter.format(totalpenjualan)}',
-                                    style: const TextStyle(
-                                      fontFamily: 'Readex Pro',
-                                      color: Warna.tertiary,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        const Text(
+                                          'Rp,',
+                                          style: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Warna.error,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${currencyFormatter.format(transaksi.totalmodal)}',
+                                          style: const TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Warna.error,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -720,7 +878,7 @@ Widget buildpenjualan(BuildContext context, TotalTransaksi transaksi) {
                                       'x',
                                       style: TextStyle(
                                         fontFamily: 'Readex Pro',
-                                        color: Warna.secondarytext,
+                                        color: Warna.primarytext,
                                       ),
                                     ),
                                   ),
@@ -731,7 +889,7 @@ Widget buildpenjualan(BuildContext context, TotalTransaksi transaksi) {
                                       item['total_item'].toString(),
                                       style: const TextStyle(
                                         fontFamily: 'Readex Pro',
-                                        color: Warna.secondarytext,
+                                        color: Warna.primarytext,
                                       ),
                                     ),
                                   ),
@@ -744,7 +902,7 @@ Widget buildpenjualan(BuildContext context, TotalTransaksi transaksi) {
                                     item['satuan_item'],
                                     style: TextStyle(
                                       fontFamily: 'Readex Pro',
-                                      color: Warna.secondarytext,
+                                      color: Warna.primarytext,
                                     ),
                                   ),
                                 ],
@@ -778,7 +936,8 @@ class _CardWidgetProdukObatTransaksiState extends State<CardWidgetProdukObatTran
   final currencyFormatter = NumberFormat('#,##0', 'ID');
   @override
   Widget build(BuildContext context) {
-    double harga = widget.produkobat.harga;
+    double hargabeli = widget.produkobat.hargabeli;
+    double hargajual = widget.produkobat.hargajual;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -868,18 +1027,18 @@ class _CardWidgetProdukObatTransaksiState extends State<CardWidgetProdukObatTran
                           style: TextStyle(
                             fontFamily:
                             'Readex Pro',
-                            color: Warna.tertiary,
+                            color: Warna.error,
                             fontWeight:
                             FontWeight
                                 .w600,
                           ),
                         ),
                         Text(
-                          '${currencyFormatter.format(harga)}',
+                          '${currencyFormatter.format(hargabeli)}',
                           style: const TextStyle(
                             fontFamily:
                             'Readex Pro',
-                            color: Warna.tertiary,
+                            color: Warna.error,
                             fontWeight:
                             FontWeight
                                 .w600,
@@ -891,8 +1050,8 @@ class _CardWidgetProdukObatTransaksiState extends State<CardWidgetProdukObatTran
                 ),
               ),
               Row(
-                mainAxisSize:
-                MainAxisSize.max,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     mainAxisSize:
@@ -920,6 +1079,34 @@ class _CardWidgetProdukObatTransaksiState extends State<CardWidgetProdukObatTran
                           fontWeight:
                           FontWeight
                               .w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize:
+                    MainAxisSize.max,
+                    children: [
+                      const Text(
+                        'Rp,',
+                        style: TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
+                        ),
+                      ),
+                      Text(
+                        '${currencyFormatter.format(hargajual)}',
+                        style: const TextStyle(
+                          fontFamily:
+                          'Readex Pro',
+                          color: Warna.hijaujual,
+                          fontWeight:
+                          FontWeight
+                              .w600,
                         ),
                       ),
                     ],
@@ -956,7 +1143,7 @@ class _CardKeranjangTransaksiState extends State<CardKeranjangTransaksi> {
   Widget build(BuildContext context) {
     final indexList = addedProdukKeranjang.indexWhere((element) => element.nama == widget.keranjangproduk.nama);
     int currentValue = int.parse(jumlahController.text);
-    double? jumlahHarga = widget.keranjangproduk.harga! * currentValue;
+    double? jumlahHarga = widget.keranjangproduk.hargajual! * currentValue;
     return Container(
       child: Row(
         mainAxisSize: MainAxisSize.max,

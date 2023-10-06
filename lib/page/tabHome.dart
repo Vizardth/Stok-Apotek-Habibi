@@ -57,7 +57,7 @@ class _TabHomeState extends State<TabHome> {
         centerTitle: false,
         elevation: 2,
       ),
-      body: // Generated code for this Column Widget...
+      body:
       Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -362,7 +362,6 @@ class _TabHomeState extends State<TabHome> {
                           return const Text('Empty');
                         }
 
-                        // Calculate counts for each day
                         Map<String, int> dayCounts = {};
                         snapshot.data!.docs.forEach((e) {
                           Timestamp timestamp = e.data()['waktu_penjualan'] as Timestamp;
@@ -371,8 +370,6 @@ class _TabHomeState extends State<TabHome> {
 
                           dayCounts[formattedDate] = (dayCounts[formattedDate] ?? 0) + 1;
                         });
-
-                        // Convert to chart data format and limit to 7 bars
                         List<Map<String, dynamic>> listChart = dayCounts.entries.map((entry) {
                           return {
                             'domain': entry.key,
@@ -382,7 +379,6 @@ class _TabHomeState extends State<TabHome> {
 
                         listChart.sort((a, b) => a['domain'].compareTo(b['domain']));
 
-                        // Limit to maximum 7 bars
                         if (listChart.length > 7) {
                           listChart = listChart.sublist(listChart.length - 7);
                         }

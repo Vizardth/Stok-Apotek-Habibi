@@ -43,6 +43,7 @@ class _AddTransactionState extends State<AddTransaction> {
     FirebaseFirestore.instance.collection('produk');
 
     final totalHarga = calculateTotalHarga();
+    final totalModal = calculateTotalModal();
     List<Map<String, dynamic>> items = addedProdukKeranjang.map((produk) {
       return {
         'nama_item': produk.nama,
@@ -98,12 +99,14 @@ class _AddTransactionState extends State<AddTransaction> {
 
     DocumentReference transactionDoc = await transaksiCollection.add({
       'total_penjualan': totalHarga.toInt(),
+      'total_modal' : totalModal.toInt(),
       'waktu_penjualan': Timestamp.now(),
       'items': items,
     });
 
     transactionDoc.set({
       'total_penjualan': totalHarga.toInt(),
+      'total_modal' : totalModal.toInt(),
       'waktu_penjualan': Timestamp.now(),
       'items': items,
       'transaksiID': transactionDoc.id,
@@ -147,11 +150,23 @@ class _AddTransactionState extends State<AddTransaction> {
 
     addedProdukKeranjang.forEach((element) {
       int quantity = element.jumlahproduksementara ?? 0;
-      double hargaPerItem = element.harga ?? 0.0;
+      double hargaPerItem = element.hargajual ?? 0.0;
       totalHarga += quantity * hargaPerItem;
     });
 
     return totalHarga;
+  }
+
+  double calculateTotalModal() {
+    double totalModal = 0;
+
+    addedProdukKeranjang.forEach((element) {
+      int quantity = element.jumlahproduksementara ?? 0;
+      double modalPerItem = element.hargabeli ?? 0.0;
+      totalModal += quantity * modalPerItem;
+    });
+
+    return totalModal;
   }
 
 
@@ -365,7 +380,8 @@ void addCart(Produkobat inidata) {
     addedProdukKeranjang.add(KeranjangProduk(
       nama: inidata.nama,
       stok: inidata.stok,
-      harga: inidata.harga,
+      hargajual: inidata.hargajual,
+      hargabeli: inidata.hargabeli,
       satuan: inidata.satuan,
       jumlahproduksementara: 1,
     ));

@@ -44,165 +44,163 @@ class _LoginState extends State<Login> {
             ),
             shape: BoxShape.rectangle,
           ),
-          child: Expanded(
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional(0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            'assets/logofarmasi.png',
-                            width: 200,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          ),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: AlignmentDirectional(0, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          'assets/logofarmasi.png',
+                          width: 200,
+                          height: 150,
+                          fit: BoxFit.cover,
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                  child: Text(
+                    'Apotek Habibi',
+                    style: TextStyle(
+                      fontFamily: 'Readex Pro',
+                      color: Colors.black,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                    child: Text(
-                      'Apotek Habibi',
-                      style: TextStyle(
-                        fontFamily: 'Readex Pro',
-                        color: Colors.black,
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 10, 15, 10),
-                    child: TextFormField(
-                      controller: emailController,
-                      autofocus: false,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'E-mail',
-                        labelStyle: TextStyle(
-                          fontWeight: FontWeight.w400
-                        ),
-                        hintStyle: TextStyle(
-                          fontWeight: FontWeight.w400
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      style: TextStyle(
-                        fontFamily: 'Readex Pro',
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 20),
-                    child: TextFormField(
-                      controller: passwordController,
-                      autofocus: false,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        labelStyle: TextStyle(
-                            fontWeight: FontWeight.w400
-                        ),
-                        hintStyle: TextStyle(
-                            fontWeight: FontWeight.w400
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      style: TextStyle(
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(15, 10, 15, 10),
+                  child: TextFormField(
+                    controller: emailController,
+                    autofocus: false,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelText: 'E-mail',
+                      labelStyle: TextStyle(
                         fontWeight: FontWeight.w400
                       ),
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w400
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                    style: TextStyle(
+                      fontFamily: 'Readex Pro',
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
-                  ElevatedButton(
-                    child: Text('Log In'),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 20),
+                  child: TextFormField(
+                    controller: passwordController,
+                    autofocus: false,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                          fontWeight: FontWeight.w400
                       ),
-                      textStyle: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600
+                      hintStyle: TextStyle(
+                          fontWeight: FontWeight.w400
                       ),
-                      minimumSize: Size(200, 50),
-                      backgroundColor: Color(0xff8722e1),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
                     ),
-                    onPressed: signIn,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400
+                    ),
                   ),
+                ),
+                ElevatedButton(
+                  child: Text('Log In'),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    textStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600
+                    ),
+                    minimumSize: Size(200, 50),
+                    backgroundColor: Color(0xff8722e1),
+                  ),
+                  onPressed: signIn,
+                ),
 
-                  TextButton(onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Forgot())), child: Text("Forgot Password"))
+                TextButton(onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Forgot())), child: Text("Forgot Password"))
 
-                ],
-              ),
+              ],
             ),
           ),
         ),

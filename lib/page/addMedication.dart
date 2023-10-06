@@ -20,7 +20,8 @@ class AddMedication extends StatefulWidget {
 class _AddMedicationState extends State<AddMedication> {
   final nama = TextEditingController();
   final stok = TextEditingController();
-  final harga = TextEditingController();
+  final hargabeli = TextEditingController();
+  final hargajual = TextEditingController();
 
 
   String? satuanobat;
@@ -284,7 +285,7 @@ class _AddMedicationState extends State<AddMedication> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
                           child: Text(
-                            'Harga Produk',
+                            'Harga Beli Produk',
                             style:
                             TextStyle(
                               fontFamily: 'Readex Pro',
@@ -309,7 +310,7 @@ class _AddMedicationState extends State<AddMedication> {
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                               child: TextFormField(
-                                controller: harga,
+                                controller: hargabeli,
                                 keyboardType: TextInputType.numberWithOptions(decimal: true), // Allow decimal numbers
                                 autofocus: false,
                                 obscureText: false,
@@ -355,6 +356,85 @@ class _AddMedicationState extends State<AddMedication> {
                     ),
                   ),
                   Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
+                          child: Text(
+                            'Harga Jual Produk',
+                            style:
+                            TextStyle(
+                              fontFamily: 'Readex Pro',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 200,
+                          decoration: BoxDecoration(),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Rp,',
+                                style: TextStyle(
+                                    color: Colors.black
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                                  child: TextFormField(
+                                    controller: hargajual,
+                                    keyboardType: TextInputType.numberWithOptions(decimal: true), // Allow decimal numbers
+                                    autofocus: false,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      hintText: '0',
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Warna.alternate,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Warna.primary,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Warna.error,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Warna.error,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: ButtonText (
                       textbutton: 'Simpan',
@@ -367,7 +447,8 @@ class _AddMedicationState extends State<AddMedication> {
                             satuan: satuanobat!,
                             nama: nama.text,
                             stok: int.parse(stok.text),
-                            harga: double.parse(harga.text),
+                            hargabeli: double.parse(hargabeli.text),
+                            hargajual: double.parse(hargajual.text),
                         );
                         createOrUpdateProdukobat(produk).then((_){
                           setState(() {

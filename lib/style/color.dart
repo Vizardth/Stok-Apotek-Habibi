@@ -11,4 +11,5 @@ class Warna {
   static const Color primarybackground = Color(0xffF1F4F8);
   static const Color secondarybackground = Color(0xffFFFFFF);
   static const Color primarytext = Color (0xff14181B);
+  static const Color hijaujual = Color (0xff39D262);
 }

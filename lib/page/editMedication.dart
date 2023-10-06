@@ -20,7 +20,8 @@ class EditMedication extends StatefulWidget {
 class _EditMedicationState extends State<EditMedication> {
   final nama = TextEditingController();
   final stok = TextEditingController();
-  final harga = TextEditingController();
+  final hargabeli = TextEditingController();
+  final hargajual = TextEditingController();
 
   String? satuanobat;
 
@@ -33,7 +34,8 @@ class _EditMedicationState extends State<EditMedication> {
 
     nama.text = widget.produk.nama;
     stok.text = widget.produk.stok.toString();
-    harga.text = widget.produk.harga.toString();
+    hargabeli.text = widget.produk.hargabeli.toString();
+    hargajual.text = widget.produk.hargajual.toString();
     satuanobat = widget.produk.satuan;
 
   }
@@ -254,6 +256,7 @@ class _EditMedicationState extends State<EditMedication> {
                               controller: stok,
                               autofocus: false,
                               obscureText: false,
+                              keyboardType: TextInputType.numberWithOptions(decimal: true),
                               decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -299,7 +302,7 @@ class _EditMedicationState extends State<EditMedication> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
                           child: Text(
-                            'Harga Produk',
+                            'Harga Beli Produk',
                             style:
                             TextStyle(
                               fontFamily: 'Readex Pro',
@@ -325,7 +328,88 @@ class _EditMedicationState extends State<EditMedication> {
                                   padding:
                                   EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                                   child: TextFormField(
-                                    controller: harga,
+                                    controller: hargabeli,
+                                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                    autofocus: false,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Warna.alternate,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Warna.primary,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color:
+                                          Warna.error,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color:
+                                          Warna.error,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
+                          child: Text(
+                            'Harga Jual Produk',
+                            style:
+                            TextStyle(
+                              fontFamily: 'Readex Pro',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 200,
+                          decoration: BoxDecoration(),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Rp,',
+                                style: TextStyle(
+                                    color: Colors.black
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding:
+                                  EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                                  child: TextFormField(
+                                    controller: hargajual,
+                                    keyboardType: TextInputType.numberWithOptions(decimal: true),
                                     autofocus: false,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -382,7 +466,8 @@ class _EditMedicationState extends State<EditMedication> {
                           satuan: satuanobat!,
                           nama: nama.text,
                           stok: int.parse(stok.text),
-                          harga: double.parse(harga.text),
+                          hargabeli: double.parse(hargabeli.text),
+                          hargajual: double.parse(hargajual.text),
                         );
                         createOrUpdateProdukobat(produk).then((_){
                           setState(() {

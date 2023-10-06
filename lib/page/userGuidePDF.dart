@@ -33,9 +33,9 @@ class _UserGuidePDFWidgetState extends State<UserGuidePDFWidget> {
       onTap: ()=>FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Warna.primarybackground,
+        backgroundColor: Warna.secondarybackground,
         appBar: AppBar(
-          backgroundColor: Warna.primarybackground,
+          backgroundColor: Warna.secondarybackground,
           iconTheme: IconThemeData(color: Colors.black),
           automaticallyImplyLeading: true,
           title: Text(
